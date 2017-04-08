@@ -1,0 +1,47 @@
+function aditya(a,b,c)
+ 
+min_re = -10;
+max_re = 5;
+min_im = -3;
+max_im = 2;
+n_re = 100;
+n_im = 100;
+tol = 0.01;
+coeff = [a b c]; polyroots = roots(coeff);
+r1=polyroots(1);
+r2=polyroots(2);
+max_steps=30;
+
+delta_re = (max_re-min_re)/n_re; 
+delta_im = (max_im-min_im)/n_im;
+x = min_re:delta_re:max_re; 
+y = min_im:delta_im:max_im;
+[X,Y]=meshgrid(x,y); 
+
+Z = X + i*Y;
+
+
+z = Z(9,20);
+
+if z == 0
+z = tol;
+end
+
+flag = 0;
+p=0;
+while (flag <= max_steps) && (p==0)
+plot(z,'o--','color','red');
+hold on
+axis([-10 5 -3 2]);
+
+z = z - (a*z.^2 + b*z + c)./(2*a*z + b);
+flag=flag+1;
+if norm(a*z.^2 + b*z +c) <= tol
+p=1;
+plot(z,'o','color','blue');
+title("Blue colour shows the root at which initial guess converges");
+end
+end
+endfunction
+
+
